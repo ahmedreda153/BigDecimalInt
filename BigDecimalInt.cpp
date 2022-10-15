@@ -86,6 +86,62 @@ void whichGreater(string &tempChar1, string &tempChar2, string &answer, string &
 	}
 }
 
+void subtract(string &str, string &tempChar1, string &tempChar2, string &answer, int &carry, bool &carryCheck, string &str2)
+{
+	for (int i = str.length() - 1; i >= 0; i--)
+	{
+
+		if (carryCheck)
+		{
+			carry = 0;
+		}
+		tempChar1 = str[i];
+		tempChar2 = str2[i];
+		if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
+		{
+			answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
+			carryCheck = true;
+		}
+		else
+		{
+			carryCheck = false;
+			answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
+			carry = 1;
+		}
+	}
+}
+void sum(string &str, string &tempChar1, string &tempChar2, string &answer, int &carry, bool &carryCheck, string &str2)
+{
+	for (int i = str.length() - 1; i >= 0; i--)
+	{
+		if (carryCheck)
+		{
+			carry = 0;
+		}
+		tempChar1 = str[i];
+		tempChar2 = str2[i];
+		if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
+		{
+			answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
+			carryCheck = true;
+		}
+		else
+		{
+			carryCheck = false;
+			if (i == 0)
+			{
+				answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+				answer += '1';
+			}
+			else
+			{
+				answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+				carry = 1;
+			}
+		}
+	}
+}
+
 BigDecimalInt BigDecimalInt::operator+(BigDecimalInt anotherDec)
 {
 	int sizeDiff, carry = 0, firstStringSize, secondStringSize, removeZero = 0;
@@ -265,6 +321,9 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 	int sizeDiff, carry = 0, firstStringSize, secondStringSize, zeros{0};
 	string temp = "", answer = "", tempChar1, tempChar2, tempChar3, tempChar4;
 	bool carryCheck = true, negSign1 = false, negSign2 = false, sign = false, whichOne = true, check = false;
+	firstStringSize = str.length();
+	secondStringSize = anotherDec.str.length();
+	sizeDiff = max(str.length(), anotherDec.str.length()) - min(str.length(), anotherDec.str.length());
 
 	if (str[0] == '+')
 	{
@@ -298,26 +357,27 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 			{
 				str.swap(anotherDec.str);
 			}
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
-				{
-					answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
-					carryCheck = true;
-				}
-				else
-				{
-					carryCheck = false;
-					answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
-					carry = 1;
-				}
-			}
+			subtract(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
+			// 		carryCheck = true;
+			// 	}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
+			// 		carry = 1;
+			// 	}
+			// }
 
 			int i = 1;
 			while (answer[str.length() - i] == '0')
@@ -335,9 +395,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 		}
 		else
 		{
-			firstStringSize = str.length();
-			secondStringSize = anotherDec.str.length();
-			sizeDiff = max(str.length(), anotherDec.str.length()) - min(str.length(), anotherDec.str.length());
+
 			if (secondStringSize > firstStringSize)
 			{
 				anotherDec.str.swap(str);
@@ -358,27 +416,28 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 				}
 				anotherDec.str = temp + anotherDec.str;
 			}
+			subtract(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
+			// 		carryCheck = true;
+			// 	}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
+			// 		carry = 1;
+			// 	}
+			// }
 
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
-				{
-					answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
-					carryCheck = true;
-				}
-				else
-				{
-					carryCheck = false;
-					answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
-					carry = 1;
-				}
-			}
 			if (sign)
 			{
 				answer += '-';
@@ -392,43 +451,41 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 		anotherDec.str.erase(0, 1);
 		if (str.length() == anotherDec.str.length())
 		{
+			sum(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
+			// 		carryCheck = true;
+			// 	}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		if (i == 0)
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			answer += '1';
+			// 		}
+			// 		else
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			carry = 1;
+			// 		}
+			// 	}
+			// }
 
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
-				{
-					answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
-					carryCheck = true;
-				}
-				else
-				{
-					carryCheck = false;
-					if (i == 0)
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						answer += '1';
-					}
-					else
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						carry = 1;
-					}
-				}
-			}
 			return BigDecimalInt(reverse(answer, ""));
 		}
 
 		else
 		{
-			firstStringSize = str.length();
-			secondStringSize = anotherDec.str.length();
-			sizeDiff = max(str.length(), anotherDec.str.length()) - min(str.length(), anotherDec.str.length());
 
 			if (anotherDec.str.length() > str.length())
 			{
@@ -448,36 +505,37 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 				}
 				anotherDec.str = temp + anotherDec.str;
 			}
+			sum(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
+			// 		carryCheck = true;
+			// 	}
 
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
-				{
-					answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
-					carryCheck = true;
-				}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		if (i == 0)
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			answer += '1';
+			// 		}
+			// 		else
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			carry = 1;
+			// 		}
+			// 	}
+			// }
 
-				else
-				{
-					carryCheck = false;
-					if (i == 0)
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						answer += '1';
-					}
-					else
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						carry = 1;
-					}
-				}
-			}
 			return BigDecimalInt(reverse(answer, ""));
 		}
 	}
@@ -488,41 +546,42 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 
 		if (str.length() == anotherDec.str.length())
 		{
+			sum(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
+			// 		carryCheck = true;
+			// 	}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		if (i == 0)
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			answer += '1';
+			// 		}
+			// 		else
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			carry = 1;
+			// 		}
+			// 	}
+			// }
 
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
-				{
-					answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
-					carryCheck = true;
-				}
-				else
-				{
-					carryCheck = false;
-					if (i == 0)
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						answer += '1';
-					}
-					else
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						carry = 1;
-					}
-				}
-			}
 			answer += '-';
 			return BigDecimalInt(reverse(answer, ""));
 		}
 		else
 		{
-			sizeDiff = max(str.length(), anotherDec.str.length()) - min(str.length(), anotherDec.str.length());
+
 			if (anotherDec.str.length() > str.length())
 			{
 
@@ -541,34 +600,36 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 				}
 				anotherDec.str = temp + anotherDec.str;
 			}
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
-				{
-					answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
-					carryCheck = true;
-				}
-				else
-				{
-					carryCheck = false;
-					if (i == 0)
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						answer += '1';
-					}
-					else
-					{
-						answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
-						carry = 1;
-					}
-				}
-			}
+			sum(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) + stoi(tempChar2) + carry < 10)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) + stoi(tempChar2) + carry);
+			// 		carryCheck = true;
+			// 	}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		if (i == 0)
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			answer += '1';
+			// 		}
+			// 		else
+			// 		{
+			// 			answer += to_string((stoi(tempChar1) + stoi(tempChar2) + carry) - 10);
+			// 			carry = 1;
+			// 		}
+			// 	}
+			// }
+
 			answer += '-';
 			return BigDecimalInt(reverse(answer, ""));
 		}
@@ -586,26 +647,27 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 			{
 				str.swap(anotherDec.str);
 			}
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
-				{
-					answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
-					carryCheck = true;
-				}
-				else
-				{
-					carryCheck = false;
-					answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
-					carry = 1;
-				}
-			}
+			subtract(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
+			// 		carryCheck = true;
+			// 	}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
+			// 		carry = 1;
+			// 	}
+			// }
 			if (stoi(tempChar3) > stoi(tempChar4))
 			{
 				answer += '-';
@@ -614,7 +676,6 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 		}
 		else
 		{
-			sizeDiff = max(str.length(), anotherDec.str.length()) - min(str.length(), anotherDec.str.length());
 			if (anotherDec.str.length() > str.length())
 			{
 				for (int i = 0; i < sizeDiff; i++)
@@ -634,26 +695,28 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 				anotherDec.str = temp + anotherDec.str;
 				sign = true;
 			}
-			for (int i = str.length() - 1; i >= 0; i--)
-			{
-				if (carryCheck)
-				{
-					carry = 0;
-				}
-				tempChar1 = str[i];
-				tempChar2 = anotherDec.str[i];
-				if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
-				{
-					answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
-					carryCheck = true;
-				}
-				else
-				{
-					carryCheck = false;
-					answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
-					carry = 1;
-				}
-			}
+			subtract(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
+			// for (int i = str.length() - 1; i >= 0; i--)
+			// {
+			// 	if (carryCheck)
+			// 	{
+			// 		carry = 0;
+			// 	}
+			// 	tempChar1 = str[i];
+			// 	tempChar2 = anotherDec.str[i];
+			// 	if (stoi(tempChar1) - stoi(tempChar2) - carry >= 0)
+			// 	{
+			// 		answer += to_string(stoi(tempChar1) - stoi(tempChar2) - carry);
+			// 		carryCheck = true;
+			// 	}
+			// 	else
+			// 	{
+			// 		carryCheck = false;
+			// 		answer += to_string((stoi(tempChar1) + 10) - stoi(tempChar2) - carry);
+			// 		carry = 1;
+			// 	}
+			// }
+
 			if (sign)
 			{
 				answer += '-';
