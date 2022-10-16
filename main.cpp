@@ -8,7 +8,7 @@ int main()
 {
     BigDecimalInt c1("");
     BigDecimalInt c2("");
-    BigDecimalInt c3 = c1 - c2;
+    BigDecimalInt c3 = c1 + c2;
     // BigDecimalInt c3 = c1 < c2;
     cout << c3.getstr();
 }

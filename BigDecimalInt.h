@@ -7,10 +7,14 @@
 
 using namespace std;
 
-void addZero();
-void negCondition();
-string reverse();
-void whichGreater();
+void removeFrontzeroes(string &str1, string &str2);
+void addZero(int &sizeDiff, string &temp, string &str)
+void negCondition(int &carry, bool &negSign1, bool &sign, bool &carryCheck, string &tempChar2, string &tempChar1, string &answer)string reverse();
+string reverse(string str1, string str2)
+void whichGreater(string &tempChar1, string &tempChar2, string &answer, string &str1, string &str2)
+void subtract(string &str, string &tempChar1, string &tempChar2, string &answer, int &carry, bool &carryCheck, string &str2)
+void sum(string &str, string &tempChar1, string &tempChar2, string &answer, int &carry, bool &carryCheck, string &str2)
+
 
 class BigDecimalInt
 {

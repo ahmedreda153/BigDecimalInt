@@ -22,6 +22,21 @@ string BigDecimalInt::getstr()
 	return str;
 }
 
+void removeFrontzeroes(string &str1, string &str2)
+{
+	while (str1[0] == '0' || str2[0] == '0')
+	{
+		if (str1[0] == '0')
+		{
+			str1.erase(0, 1);
+		}
+		if (str2[0] == '0')
+		{
+			str2.erase(0, 1);
+		}
+	}
+}
+
 void addZero(int &sizeDiff, string &temp, string &str)
 {
 	for (int i = 0; i < sizeDiff; i++)
@@ -90,7 +105,6 @@ void subtract(string &str, string &tempChar1, string &tempChar2, string &answer,
 {
 	for (int i = str.length() - 1; i >= 0; i--)
 	{
-
 		if (carryCheck)
 		{
 			carry = 0;
@@ -173,6 +187,7 @@ BigDecimalInt BigDecimalInt::operator+(BigDecimalInt anotherDec)
 		whichOne = false;
 		negSign2 = true;
 	}
+	removeFrontzeroes(str, anotherDec.str);
 	sizeDiff = max(str.length(), anotherDec.str.length()) - min(str.length(), anotherDec.str.length());
 	firstStringSize = str.length();
 	secondStringSize = anotherDec.str.length();
