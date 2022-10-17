@@ -350,7 +350,8 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 	}
 
 	if (str[0] != '-' && anotherDec.str[0] != '-')
-	{
+	{    
+		removeFrontzeroes(str, anotherDec.str);
 		if (str.length() == anotherDec.str.length())
 		{
 			for (size_t i = 0; i < str.length(); i++)
@@ -464,6 +465,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 	else if (str[0] != '-' && anotherDec.str[0] == '-')
 	{
 		anotherDec.str.erase(0, 1);
+		removeFrontzeroes(str, anotherDec.str);
 		if (str.length() == anotherDec.str.length())
 		{
 			sum(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
@@ -558,7 +560,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 	else if (str[0] == '-' && anotherDec.str[0] != '-')
 	{
 		str.erase(0, 1);
-
+        removeFrontzeroes(str, anotherDec.str);
 		if (str.length() == anotherDec.str.length())
 		{
 			sum(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
@@ -654,6 +656,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 	{
 		str.erase(0, 1);
 		anotherDec.str.erase(0, 1);
+		removeFrontzeroes(str, anotherDec.str);
 		tempChar3 = str[0];
 		tempChar4 = anotherDec.str[0];
 		if (str.length() == anotherDec.str.length())
