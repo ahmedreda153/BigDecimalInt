@@ -31,7 +31,10 @@ public:
     BigDecimalInt operator- (BigDecimalInt anotherDec);
     BigDecimalInt operator> (BigDecimalInt anotherDec);
     BigDecimalInt operator< (BigDecimalInt anotherDec);
-    
+    bool operator==(BigDecimalInt anotherDec);
+    BigDecimalInt operator=(BigDecimalInt anotherDec);
+    int Size();
+    friend ostream &operator<<(ostream &out, BigDecimalInt b);
 };
 
 #endif

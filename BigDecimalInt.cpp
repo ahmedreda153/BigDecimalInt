@@ -964,3 +964,39 @@ BigDecimalInt BigDecimalInt::operator<(BigDecimalInt anotherDec)
 	}
 	return BigDecimalInt(answer);
 }
+
+bool BigDecimalInt::operator==(BigDecimalInt anotherDec)
+{
+	string x = this->getstr();
+	string y = anotherDec.getstr();
+	if (x.size() != anotherDec.getstr().size())
+	{
+		return false;
+	}
+	for (long long i = x.size() - 1; i >= 0; i--)
+	{
+		if (x[i] != y[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+// BigDecimalInt BigDecimalInt::operator=(BigDecimalInt anotherDec)
+// {
+//     string y = anotherDec.setstr();
+//     // this->setstr(y);
+//     return anotherDec;
+// }
+
+int BigDecimalInt::Size()
+{
+	return this->getstr().size();
+}
+
+// friend ostream &operator<<(ostream &out, BigDecimalInt b)
+// {
+//     out << b.getstr() << endl;
+//     return out;
+// }
