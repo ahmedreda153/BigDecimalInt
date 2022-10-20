@@ -11,11 +11,27 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <regex>
 
 using namespace std;
 
-BigDecimalInt::BigDecimalInt(string decStr) : str(decStr)
+bool checkValidity(string s) // check input validity
 {
+	regex temp("[+-]?[0-9]+");
+	return regex_match(s, temp);
+}
+
+BigDecimalInt::BigDecimalInt(string decStr)
+{
+	if (checkValidity(decStr))
+	{
+		str = decStr;
+	}
+	else
+	{
+		cout << "invalid input";
+		exit(0);
+	}
 }
 
 BigDecimalInt::BigDecimalInt(int decInt) : str(to_string(decInt))
@@ -88,29 +104,6 @@ string reverse(string str1, string str2) // to reverse answer before return outp
 	return str2;
 }
 
-// bool whichGreater(string &tempChar1, string &tempChar2, string &str1, string &str2)
-// {
-// 	for (int i = 0; i < str1.length(); i++)
-// 	{
-// 		tempChar1 = str1[i];
-// 		tempChar2 = str2[i];
-// 		if (stoi(tempChar1) < stoi(tempChar2))
-// 		{
-// 			return true;
-// 			break;
-// 		}
-// 		else if (stoi(tempChar1) > stoi(tempChar2))
-// 		{
-// 			return false;
-// 			break;
-// 		}
-// 		else if (i == str1.length() - 1 && stoi(tempChar1) == stoi(tempChar2))
-// 		{
-// 			return false;
-// 		}
-// 	}
-// }
-
 void subtract(string &str, string &tempChar1, string &tempChar2, string &answer, int &carry, bool &carryCheck, string &str2) // substraction algorithm
 {
 	for (int i = str.length() - 1; i >= 0; i--)
@@ -134,6 +127,7 @@ void subtract(string &str, string &tempChar1, string &tempChar2, string &answer,
 		}
 	}
 }
+
 void sum(string &str, string &tempChar1, string &tempChar2, string &answer, int &carry, bool &carryCheck, string &str2) // sum algorithm
 {
 	for (int i = str.length() - 1; i >= 0; i--)
@@ -325,13 +319,13 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 		{
 			for (size_t i = 0; i < str.length(); i++)
 			{
-				if (str[i] != anotherDec.str[i]) 
+				if (str[i] != anotherDec.str[i])
 				{
 					tempChar3 = str[i];
 					tempChar4 = anotherDec.str[i];
 					break;
 				}
-				if (i == str.length() - 1 && str[i] == anotherDec.str[i])// add zeroes to make the length equal
+				if (i == str.length() - 1 && str[i] == anotherDec.str[i]) // add zeroes to make the length equal
 				{
 					answer += '0';
 					return BigDecimalInt(answer);
@@ -344,7 +338,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 			}
 			subtract(str, tempChar1, tempChar2, answer, carry, carryCheck, anotherDec.str);
 
-			//to remove zeros which will appear in the left in the result
+			// to remove zeros which will appear in the left in the result
 			int i = 1;
 			while (answer[str.length() - i] == '0')
 			{
@@ -352,7 +346,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 				i++;
 			}
 
-			if (stoi(tempChar3) < stoi(tempChar4)) //to assign sign to the answer
+			if (stoi(tempChar3) < stoi(tempChar4)) // to assign sign to the answer
 			{
 				answer += '-';
 			}
@@ -391,7 +385,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 		}
 	}
 
-	else if (str[0] != '-' && anotherDec.str[0] == '-')//part 2
+	else if (str[0] != '-' && anotherDec.str[0] == '-') // part 2
 	{
 		anotherDec.str.erase(0, 1);
 		removeFrontzeroes(str, anotherDec.str);
@@ -429,7 +423,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 		}
 	}
 
-	else if (str[0] == '-' && anotherDec.str[0] != '-')//part 3
+	else if (str[0] == '-' && anotherDec.str[0] != '-') // part 3
 	{
 		str.erase(0, 1);
 		removeFrontzeroes(str, anotherDec.str);
@@ -467,7 +461,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 		}
 	}
 
-	else if (str[0] == '-' && anotherDec.str[0] == '-')//part 4
+	else if (str[0] == '-' && anotherDec.str[0] == '-') // part 4
 	{
 		str.erase(0, 1);
 		anotherDec.str.erase(0, 1);
@@ -536,9 +530,8 @@ bool BigDecimalInt::operator>(BigDecimalInt anotherDec)
 	{
 		str.erase(0, 1);
 		anotherDec.str.erase(0, 1);
-		if (str.length() == anotherDec.str.length())
+		if (str.length() == anotherDec.str.length()) // check which greater if the size of inputs is equal
 		{
-			// whichGreater(tempChar1, tempChar2, str, anotherDec.str);
 			for (int i = 0; i < str.length(); i++)
 			{
 				tempChar1 = str[i];
@@ -583,7 +576,6 @@ bool BigDecimalInt::operator>(BigDecimalInt anotherDec)
 		}
 		if (str.length() == anotherDec.str.length())
 		{
-			// whichGreater(tempChar2, tempChar1, anotherDec.str, str);
 			for (int i = 0; i < str.length(); i++)
 			{
 				tempChar1 = str[i];
@@ -681,7 +673,6 @@ bool BigDecimalInt::operator<(BigDecimalInt anotherDec)
 		}
 		if (str.length() == anotherDec.str.length())
 		{
-			// whichGreater(tempChar1, tempChar2 ,str, anotherDec.str);
 			for (int i = 0; i < str.length(); i++)
 			{
 				tempChar1 = str[i];
@@ -706,11 +697,11 @@ bool BigDecimalInt::operator<(BigDecimalInt anotherDec)
 		{
 			if (str.length() > anotherDec.str.length())
 			{
-				return true;
+				return false;
 			}
 			else
 			{
-				return false;
+				return true;
 			}
 		}
 	}
@@ -718,7 +709,7 @@ bool BigDecimalInt::operator<(BigDecimalInt anotherDec)
 
 bool BigDecimalInt::operator==(BigDecimalInt anotherDec)
 {
-	string x = this->getstr();
+	string x = str;
 	string y = anotherDec.getstr();
 	if (x.size() != anotherDec.getstr().size())
 	{
@@ -743,7 +734,18 @@ BigDecimalInt BigDecimalInt::operator=(BigDecimalInt anotherDec)
 
 int BigDecimalInt::Size()
 {
-	return this->getstr().size();
+	if (str[0] == '+')
+	{
+		return (str.size() - 1);
+	}
+	else if (str[0] == '-')
+	{
+		return (str.size() - 1);
+	}
+	else
+	{
+		return str.size();
+	}
 }
 
 char BigDecimalInt::sign()
