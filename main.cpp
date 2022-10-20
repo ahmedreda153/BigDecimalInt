@@ -6,7 +6,8 @@ using namespace std;
 
 int main()
 {
-    BigDecimalInt c1("-950");
-    BigDecimalInt c2("20");
-    
+    BigDecimalInt c1("");
+    BigDecimalInt c2("");
+    BigDecimalInt c3 = c1 + c2;
+    cout<<c3;
 }
