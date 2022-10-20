@@ -985,9 +985,9 @@ bool BigDecimalInt::operator==(BigDecimalInt anotherDec)
 
 // BigDecimalInt BigDecimalInt::operator=(BigDecimalInt anotherDec)
 // {
-//     string y = anotherDec.setstr();
-//     // this->setstr(y);
-//     return anotherDec;
+//     string y = anotherDec.getstr();
+// 	str = y;
+// 	return BigDecimalInt(str);
 // }
 
 int BigDecimalInt::Size()
@@ -995,8 +995,25 @@ int BigDecimalInt::Size()
 	return this->getstr().size();
 }
 
-// friend ostream &operator<<(ostream &out, BigDecimalInt b)
-// {
-//     out << b.getstr() << endl;
-//     return out;
-// }
+char BigDecimalInt::sign()
+{
+	char temp;
+	if (str[0] == '-')
+	{
+		temp = '-';
+		cout << "The sign is : ";
+		return temp;
+	}
+	else
+	{
+		temp = '+';
+		cout << "The sign is : ";
+		return temp;
+	}
+}
+
+ostream &operator<<(ostream &out, BigDecimalInt b)
+{
+    out << b.getstr() << endl;
+    return out;
+}

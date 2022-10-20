@@ -34,6 +34,7 @@ public:
     bool operator==(BigDecimalInt anotherDec);
     BigDecimalInt operator=(BigDecimalInt anotherDec);
     int Size();
+    char sign();
     friend ostream &operator<<(ostream &out, BigDecimalInt b);
 };
 

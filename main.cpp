@@ -6,11 +6,7 @@ using namespace std;
 
 int main()
 {
-    BigDecimalInt c1("950");
-    BigDecimalInt c2("950");
-    BigDecimalInt c3 = c1 + c2;
-    // BigDecimalInt c3 = c1 > c2;
-    cout << c3.getstr();
-    // cout << c1;
-
+    BigDecimalInt c1("-950");
+    BigDecimalInt c2("20");
+    
 }
