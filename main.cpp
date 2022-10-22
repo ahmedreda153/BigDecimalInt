@@ -11,5 +11,5 @@ int main()
     BigDecimalInt c1(s1);
     cin >> s2;
     BigDecimalInt c2(s2);
-    cout << c1 - c2;
+    cout << c1 + c2;
 }
