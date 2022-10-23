@@ -22,6 +22,7 @@ private:
     string str;
 
 public:
+    BigDecimalInt();
     BigDecimalInt(string decStr);
     BigDecimalInt(int decInt);
     ~BigDecimalInt();

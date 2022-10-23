@@ -21,6 +21,10 @@ bool checkValidity(string s) // check input validity
 	return regex_match(s, temp);
 }
 
+BigDecimalInt::BigDecimalInt()
+{
+}
+
 BigDecimalInt::BigDecimalInt(string decStr)
 {
 	if (checkValidity(decStr))
@@ -736,16 +740,15 @@ int BigDecimalInt::Size()
 {
 	if (str[0] == '+')
 	{
-		return (str.size() - 1);
+		str.erase(0, 1);
 	}
 	else if (str[0] == '-')
 	{
-		return (str.size() - 1);
+		str.erase(0, 1);
 	}
-	else
-	{
-		return str.size();
-	}
+	removeFrontzeroes(str, str);
+	cout << "The size is : ";
+	return str.size();
 }
 
 char BigDecimalInt::sign()
