@@ -1,5 +1,5 @@
 // FCAI - OOP - 2022 - Assignment 1
-// Program Name: pronlem 5 dominochain
+// Program Name: problem 5 dominochain
 // Program Description: check if we could make a domino chain or not
 // Last Modification Date: 13/10/2022
 // author / ID : Ahmed Alaa Mohamed / 20210027
