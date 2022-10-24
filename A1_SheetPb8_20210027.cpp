@@ -1,5 +1,5 @@
 // FCAI - OOP - 2022 - Assignment 1
-// Program Name: pronlem 8
+// Program Name: problem 8
 // Program Description: smart array
 // Last Modification Date: 22/10/2022
 // author / ID : Ahmed Alaa Mohamed / 20210027
