@@ -303,6 +303,7 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 	bool carryCheck = true, negSign1 = false, negSign2 = false, sign = false, whichOne = true, check = false;
 	firstStringSize = str.length();
 	secondStringSize = anotherDec.str.length();
+	removeFrontzeroes(str, anotherDec.str);
 	sizeDiff = max(str.length(), anotherDec.str.length()) - min(str.length(), anotherDec.str.length());
 
 	/*removing + sign from inputs because it's positive anyway*/
@@ -319,6 +320,14 @@ BigDecimalInt BigDecimalInt::operator-(BigDecimalInt anotherDec)
 	if (str[0] != '-' && anotherDec.str[0] != '-') // part 1 if the two input is positive
 	{
 		removeFrontzeroes(str, anotherDec.str);
+		if (str.length() < anotherDec.str.length())
+		{
+			addZero(sizeDiff, temp, str);
+		}
+		else
+		{
+			addZero(sizeDiff, temp, anotherDec.str);
+		}
 		if (str.length() == anotherDec.str.length())
 		{
 			for (size_t i = 0; i < str.length(); i++)

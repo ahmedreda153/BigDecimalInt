@@ -6,15 +6,7 @@
 
 using namespace std;
 
-void Binary(int n)
-{
-    if (n == 0)
-        return;
-    Binary(n / 2);
-    cout << n % 2;
-}
-
-void binaryprint(int n)
+void binaryprint(int n) // Part (A) in problem 4
 {
     if (n == 0)
     {
@@ -34,7 +26,7 @@ void binaryprint(int n)
     }
 }
 
-void numbers(string prefix, int k)
+void numbers(string prefix, int k) // Part (B) in problem 4
 {
     if (k == 0)
     {
@@ -51,6 +43,5 @@ void numbers(string prefix, int k)
 
 int main()
 {
-    // Binary(19);
-    Fractal(8, 0);
+    
 }

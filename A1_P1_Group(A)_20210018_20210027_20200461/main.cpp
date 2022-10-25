@@ -15,8 +15,8 @@ using namespace std;
 
 int main()
 {
-    BigDecimalInt c1("");
-    BigDecimalInt c2("");
+    BigDecimalInt c1("205200317");
+    BigDecimalInt c2("1362003");
     BigDecimalInt c3;
     BigDecimalInt ans;
 
